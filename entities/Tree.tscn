@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://tilesets/stardew-trees.png" type="Texture" id=1]
+[ext_resource path="res://entities/Tree.gd" type="Script" id=2]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( -7.44598, -13.5883, -15.5838, -6.29227, -15.5838, 15.3151, 16.1257, 15.3151, 15.5645, -3.76672, 10.2328, -13.8689 )
+
+[sub_resource type="AtlasTexture" id=2]
+
+[sub_resource type="Animation" id=3]
+resource_name = "Fall"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("TreeSprite/Top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -90 ), Vector2( -22, -90 ), Vector2( -43.75, -87.25 ), Vector2( -72.0312, -67.3437 ), Vector2( -83.4911, -47.0804 ), Vector2( -99.3259, 3.01637 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TreeSprite/Top:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -15.0, -30.0, -45.0, -60.0, -90.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("TreeSprite/Top:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 14.2222, 16.059 )
+
+[node name="Tree" type="StaticBody2D"]
+position = Vector2( 250, 200 )
+script = ExtResource( 2 )
+
+[node name="TreeSprite" type="Node2D" parent="."]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="TreeSprite"]
+occluder = SubResource( 1 )
+
+[node name="Bottom" type="Sprite" parent="TreeSprite"]
+texture = ExtResource( 1 )
+vframes = 36
+hframes = 12
+frame = 73
+
+[node name="Bottom2" type="Sprite" parent="TreeSprite"]
+position = Vector2( 0, -32 )
+texture = ExtResource( 1 )
+vframes = 36
+hframes = 12
+frame = 61
+
+[node name="Top" type="Sprite" parent="TreeSprite"]
+position = Vector2( 0, -90 )
+texture = ExtResource( 1 )
+normal_map = SubResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 96, 160 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Fall = SubResource( 3 )
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 4 )
